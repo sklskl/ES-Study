@@ -10,7 +10,6 @@ import java.util.Optional;
 public interface CofCompanyInfoRepository extends JpaRepository<CofCompanyInfo, Integer> {
     /**
      * 根据公司代码查询企业信息。
-     *
      * @param companyCode 公司代码
      * @return 企业信息的 Optional 对象
      */
