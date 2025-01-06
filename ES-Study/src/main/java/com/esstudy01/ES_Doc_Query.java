@@ -8,12 +8,14 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.common.unit.Fuzziness;
+import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 
 /**
@@ -106,13 +108,68 @@ public class ES_Doc_Query {
 //            System.out.println(hit.getSourceAsString());
 //        }
         //6、组合查询
+//        SearchRequest request = new SearchRequest();
+//        request.indices("user");
+//        SearchSourceBuilder builder = new SearchSourceBuilder().query(QueryBuilders.matchAllQuery());
+//        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+//        boolQueryBuilder.must(QueryBuilders.matchQuery("age", "30"));
+//        boolQueryBuilder.must(QueryBuilders.matchQuery("sex", "男"));
+//        builder.query(boolQueryBuilder);
+//        request.source(builder);
+//        SearchResponse response = esClient.search(request, RequestOptions.DEFAULT);
+//        SearchHits hits = response.getHits();
+//        System.out.println(hits.getTotalHits());
+//        System.out.println(response.getTook());
+//
+//        for (SearchHit hit : hits){
+//            System.out.println(hit.getSourceAsString());
+//        }
+        //8、模糊查询
+//        SearchRequest request = new SearchRequest();
+//        request.indices("user");
+//
+//        SearchSourceBuilder builder = new SearchSourceBuilder();
+//        builder.query(QueryBuilders.fuzzyQuery("name", "wangwu").fuzziness(Fuzziness.ONE));
+//        request.source(builder);
+//        SearchResponse response = esClient.search(request, RequestOptions.DEFAULT);
+//        SearchHits hits = response.getHits();
+//        System.out.println(hits.getTotalHits());
+//        System.out.println(response.getTook());
+//
+//        for (SearchHit hit : hits){
+//            System.out.println(hit.getSourceAsString());
+//        }
+        //9、高亮查询
+//        SearchRequest request = new SearchRequest();
+//        request.indices("user");
+//
+//        SearchSourceBuilder builder = new SearchSourceBuilder();
+//        TermsQueryBuilder query = QueryBuilders.termsQuery("name", "zhangsan");
+//        HighlightBuilder highlightBuilder = new HighlightBuilder();
+//        highlightBuilder.preTags("<font color='red'>");
+//        highlightBuilder.postTags("</font>");
+//        highlightBuilder.field("name");
+//        builder.highlighter(highlightBuilder);
+//        builder.query(query);
+//        request.source(builder);
+//        SearchResponse response = esClient.search(request, RequestOptions.DEFAULT);
+//        SearchHits hits = response.getHits();
+//        System.out.println(hits.getTotalHits());
+//        System.out.println(response.getTook());
+//
+//        for (SearchHit hit : hits){
+//            System.out.println(hit.getSourceAsString());
+//        }
+        //聚合查询
         SearchRequest request = new SearchRequest();
         request.indices("user");
-        SearchSourceBuilder builder = new SearchSourceBuilder().query(QueryBuilders.matchAllQuery());
-        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
-        boolQueryBuilder.must(QueryBuilders.matchQuery("age", "30"));
-        boolQueryBuilder.must(QueryBuilders.matchQuery("sex", "男"));
-        builder.query(boolQueryBuilder);
+
+        SearchSourceBuilder builder = new SearchSourceBuilder();
+        AggregationBuilder aggregationBuilder = AggregationBuilders.max("max_age").field("age");
+        builder.aggregation(aggregationBuilder);
+
+
+
         request.source(builder);
         SearchResponse response = esClient.search(request, RequestOptions.DEFAULT);
         SearchHits hits = response.getHits();
@@ -121,7 +178,9 @@ public class ES_Doc_Query {
 
         for (SearchHit hit : hits){
             System.out.println(hit.getSourceAsString());
-        }
+        };
+
+
         //关闭ES客户端
         esClient.close();
     }

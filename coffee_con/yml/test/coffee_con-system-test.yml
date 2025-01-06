@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: coffee-test
+  name: coffee-con-test
+spec:
+  selector:
+    matchLabels:
+      app: coffee-con-test
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: coffee-con-test
+    spec:
+      containers:
+        - name: coffee-con-test
+          image: lst-acr-registry.cn-beijing.cr.aliyuncs.com/coffee/coffee_con-test:1.0
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: Asia/Shanghai
+          ports:
+            - name: http
+              containerPort: 9021
+      imagePullSecrets:
+        - name: lst-acr
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: coffee-test
+  name: coffee-con-service-test
+spec:
+  selector:
+    app: coffee-con-test
+  ports:
+    - name: http
+      port: 9021
+      protocol: TCP
+      targetPort: 9021
+  type: NodePort
+  sessionAffinity: ClientIP
+#---
+#apiVersion: networking.k8s.io/v1
+#kind: Ingress
+#metadata:
+#  name:  coffee_con-ingress-uat
+#  namespace: coffee-test
+#spec:
+#  rules:
+#    - host: cancer-system.ce840e36249944764b94c83ce60ef9bf4.cn-beijing.alicontainer.com
+#      http:
+#        paths:
+#          - path: /
+#            backend:
+#              service:
+#                name: coffee_con-service-test
+#                port:
+#                  number: 9020
+#            pathType: Prefix
