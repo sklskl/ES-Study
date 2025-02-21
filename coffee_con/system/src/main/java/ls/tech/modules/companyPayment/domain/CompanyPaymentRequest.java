@@ -23,12 +23,7 @@ public class CompanyPaymentRequest {
     private List<String> payTypeCodes;
 
     /**
-     * 支付方式编码（用于禁用单个支付方式时）
-     */
-    private String payTypeCode;
-
-    /**
      * 操作员ID
      */
-    private Integer operatorId;
+//    private Integer operatorId;
 }

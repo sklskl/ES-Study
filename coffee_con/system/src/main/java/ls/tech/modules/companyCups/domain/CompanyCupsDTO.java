@@ -1,8 +1,9 @@
 package ls.tech.modules.companyCups.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
@@ -13,26 +14,33 @@ import java.time.LocalDateTime;
  * @create: 2025-01-04 09:44
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CompanyCupsDTO {
-    private Integer id;
+    private int id;
+    private Integer companyId;//企业id
+    private String  companyCode;//企业bianm
 
-    @NotNull(message = "Company ID cannot be null")
-    private Integer companyId;
+    @Size(max = 100, message = "企业名称")
+    private String companyName; // 企业名称
 
-    @Size(max = 100, message = "Company name cannot exceed 100 characters")
-    private String companyName; // 新增字段
+//    @NotNull(message = "包月杯量")
+    private Integer freeCupsCount=0;//包月杯量
 
-    @NotNull(message = "Free cups count cannot be null")
-    private Integer freeCupsCount;
-
-    @NotNull(message = "Status cannot be null")
+//    @NotNull(message = "企业状态 1:正常 0：删除 2:注销")
     private Integer status;
 
-    private Integer period;
+    private Integer period;//杯量周期 1: 自然月
 
     private LocalDateTime createTime;
     private LocalDateTime modifyTime;
+    private LocalDateTime lastOrderTime;
 
-    @NotNull(message = "Operator cannot be null")
-    private Integer operator;
+//    @NotNull(message = "操作人员")
+//    private Integer operator;
+
+
+    private Integer actualCups=0; // 实际杯数
+    private Integer selfPaidCups=0; // 自费杯数
+    private Integer remainingCups=0;//剩余杯数
 }

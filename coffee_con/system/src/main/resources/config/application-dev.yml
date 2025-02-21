@@ -54,6 +54,16 @@ spring:
           config:
             multi-statement-allow: true
 
+
+  redis:
+    #数据库索引
+    database: ${REDIS_DB:10}
+    host: ${REDIS_HOST:10.0.249.72}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PWD:lst}
+    #连接超时时间
+    timeout: 5000
+
 # 登录相关配置
 login:
   #  是否限制单用户登录
@@ -114,8 +124,22 @@ file:
     path: /home/eladmin/file/
     avatar: /home/eladmin/avatar/
   windows:
-    path: C:\eladmin\file\
+    path: D:\tmp\uploads\
     avatar: C:\eladmin\avatar\
   # 文件大小 /M
   maxSize: 100
   avatarMaxSize: 5
+
+
+# redis连接池配置
+jedis:
+  pool:
+    host: 10.0.249.72
+    port: 6379
+    authPwd: lst
+    database: 9
+    config:
+      maxTotal: 100
+      maxIdle: 10
+      minIdle: 5
+      maxWaitMillis: 100000

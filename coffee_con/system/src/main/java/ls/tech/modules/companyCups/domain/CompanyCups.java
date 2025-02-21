@@ -18,7 +18,7 @@ public class CompanyCups {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     // 多对一关系，关联 CompanyInfo
     @ManyToOne(fetch = FetchType.LAZY)

@@ -9,19 +9,20 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * @program: coffee_con
  * @ClassName: CompanyPayment
- * @author: skl
- * @create: 2025-01-03 10:23
+ * @description: 企业支付绑定实体类
  */
 @Data
 @Entity
-@Table(name = "cof_company_pay",uniqueConstraints = @UniqueConstraint(columnNames = {"company_id", "pay_type_code"}))
-public class CompanyPayment {
+@Table(name = "cof_company_pay", uniqueConstraints = @UniqueConstraint(columnNames = {"company_id", "pay_type_code"}))
+public class CompanyPayment implements Serializable {
         private static final long serialVersionUID = 1L;
+
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "id")
@@ -55,13 +56,22 @@ public class CompanyPayment {
         @ApiModelProperty(value = "创建时间")
         private LocalDateTime createTime;
 
-
         @Column(name = "modify_time")
         @ApiModelProperty(value = "修改时间")
         private LocalDateTime modifyTime;
 
-        public void copy(CompanyPayment source) {
-            BeanUtil.copyProperties(source, this, CopyOptions.create().setIgnoreNullValue(true));
-    }
+        /**
+         * 与 CofPayType 的关联关系
+         */
+        @ManyToOne(fetch = FetchType.EAGER)
+        @JoinColumn(name = "pay_type_code", referencedColumnName = "code", insertable = false, updatable = false)
+        @ApiModelProperty(value = "支付类型")
+        private CofPayType payType;
 
+        /**
+         * 拷贝属性
+         */
+        public void copy(CompanyPayment source) {
+                BeanUtil.copyProperties(source, this, CopyOptions.create().setIgnoreNullValue(true));
+        }
 }

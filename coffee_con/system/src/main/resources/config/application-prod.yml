@@ -4,9 +4,9 @@ spring:
     druid:
       db-type: com.alibaba.druid.pool.DruidDataSource
       driverClassName: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-      url: jdbc:log4jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:eladmin}?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false
-      username: ${DB_USER:root}
-      password: ${DB_PWD:123456}
+      url: jdbc:log4jdbc:mysql://${DB_HOST:rm-2zeoxwo87xs2p97e1.mysql.rds.aliyuncs.com}:${DB_PORT:3306}/${DB_NAME:cofficon}?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false
+      username: ${DB_USER:morgana}
+      password: ${DB_PWD:Morgana123456}
       # 初始连接数
       initial-size: 5
       # 最小连接数
@@ -50,7 +50,14 @@ spring:
         wall:
           config:
             multi-statement-allow: true
-
+  redis:
+    #数据库索引
+    database: ${REDIS_DB:10}
+    host: ${REDIS_HOST:r-2zemlu30s7zqf5obrh.redis.rds.aliyuncs.com}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PWD:Morgana123456}
+    #连接超时时间
+    timeout: 5000
 # 登录相关配置
 login:
   #  是否限制单用户登录
@@ -123,3 +130,17 @@ file:
   # 文件大小 /M
   maxSize: 100
   avatarMaxSize: 5
+
+
+# redis连接池配置
+jedis:
+  pool:
+    host: 10.0.249.72
+    port: 6379
+    authPwd: lst
+    database: 9
+    config:
+      maxTotal: 100
+      maxIdle: 10
+      minIdle: 5
+      maxWaitMillis: 100000

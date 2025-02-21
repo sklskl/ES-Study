@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 /**
  * @program: coffee_con
@@ -35,19 +34,19 @@ public class CofCompanyInfo {
     @Column(name = "mobile", nullable = false, length = 20)
     private String mobile;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status", nullable = false)//企业状态 1:正常 0：删除 2:注销
     private Integer status;
 
-    @Column(name = "contract_start_date", nullable = false)
+    @Column(name = "contract_start_date", nullable = false)//合同开始时间
     private LocalDateTime contractStartDate;
 
-    @Column(name = "contract_end_date", nullable = false)
+    @Column(name = "contract_end_date", nullable = false)//合同结束时间
     private LocalDateTime contractEndDate;
 
-    @Column(name = "contract_status", nullable = false)
+    @Column(name = "contract_status", nullable = false)//合同状态 1:进行中 0:待确认 2:已终止
     private Integer contractStatus;
 
-    @Column(name = "collaboration_mode", nullable = false, length = 10)
+    @Column(name = "collaboration_mode", nullable = false, length = 10)//合作模式 关联字典表
     private String collaborationMode;
 
     @Column(name = "create_time")
@@ -61,8 +60,5 @@ public class CofCompanyInfo {
 
     @Column(name = "aes_key", length = 100)
     private String aesKey;
-
-    @OneToMany(mappedBy = "companyInfo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<CompanyCups> companyCups;
 }
 
