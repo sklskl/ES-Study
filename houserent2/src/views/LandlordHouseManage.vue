@@ -54,7 +54,7 @@ export default {
   methods: {
     getHouseList() {
       request.get('/api/landlord/houses').then(res => {
-        if(res.code === 200) {
+        if (res.code === 200) {
           this.houseList = res.data
         }
       })
@@ -76,10 +76,10 @@ export default {
       }
     },
     saveHouse() {
-      if(this.editForm.id) {
+      if (this.editForm.id) {
         // 更新
         request.put(`/api/landlord/houses/${this.editForm.id}`, this.editForm).then(res => {
-          if(res.code === 200) {
+          if (res.code === 200) {
             this.$message.success('更新成功')
             this.dialogVisible = false
             this.getHouseList()
@@ -88,7 +88,7 @@ export default {
       } else {
         // 新增
         request.post(`/api/landlord/houses`, this.editForm).then(res => {
-          if(res.code === 200) {
+          if (res.code === 200) {
             this.$message.success('新增成功')
             this.dialogVisible = false
             this.getHouseList()
@@ -101,12 +101,13 @@ export default {
         type: 'warning'
       }).then(() => {
         request.delete(`/api/landlord/houses/${id}`).then(res => {
-          if(res.code === 200) {
+          if (res.code === 200) {
             this.$message.success('删除成功')
             this.getHouseList()
           }
         })
-      }).catch(() => {})
+      }).catch(() => {
+      })
     }
   }
 }

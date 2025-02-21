@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>Admin Layout</h2>
-    <router-view />
+    <router-view/>
   </div>
 </template>
 

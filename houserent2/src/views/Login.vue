@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import {mapActions} from 'vuex'
 import {loginApi} from '@/api/api'
 
 export default {
@@ -41,7 +41,7 @@ export default {
     ...mapActions(['login']),
     onLogin() {
       // 发起登录请求
-      loginApi( this.form).then(res => {
+      loginApi(this.form).then(res => {
         // res 中拿到token, role等信息
         if (res.code === 200) {
           // 假设后端返回 { token: 'xxx', role: 'user', username: 'xxx' }
